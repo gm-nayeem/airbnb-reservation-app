@@ -1,31 +1,30 @@
 import { db } from "@/libs/prismadb";
-import { loggedInUser } from "@/libs/auth";
+import { currentUser } from "@/libs/auth";
 
 export default async function getCurrentUser() {
-    const user = await loggedInUser();
+    const cUser = await currentUser();
 
     try {
-
-        if (user?.email) {
+        if (!cUser?.email) {
             return null;
         }
 
-        const currentUser = await db.user.findUnique({
+        const userData = await db.user.findUnique({
             where: {
-                email: user?.email as string,
+                email: cUser?.email as string,
             }
         });
 
-        if (!currentUser) {
+        if (!userData) {
             return null;
         }
 
         return {
-            ...currentUser,
-            createdAt: currentUser.createdAt.toISOString(),
-            updatedAt: currentUser.updatedAt.toISOString(),
+            ...userData,
+            createdAt: userData.createdAt.toISOString(),
+            updatedAt: userData.updatedAt.toISOString(),
             emailVerified:
-                currentUser.emailVerified?.toISOString() || null,
+                userData.emailVerified?.toISOString() || null,
         };
     } catch (error: any) {
         return null;
