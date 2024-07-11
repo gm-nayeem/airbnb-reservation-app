@@ -38,17 +38,17 @@ const LoginModal = () => {
     signIn("credentials", {
       ...data,
       redirect: false,
-    }).then((callback) => {
+    }).then((res) => {
       setIsLoading(false);
 
-      if (callback?.ok) {
+      if (res?.ok) {
         toast.success("Logged in");
         router.refresh();
         loginModal.onClose();
       }
 
-      if (callback?.error) {
-        toast.error(callback.error);
+      if (res?.error) {
+        toast.error(res.error);
       }
     });
   };
@@ -120,14 +120,14 @@ const LoginModal = () => {
 
   return (
     <Modal
-      disabled={isLoading}
-      isOpen={loginModal.isOpen}
       title="Login"
       actionLabel="Continue"
+      body={bodyContent}
+      disabled={isLoading}
+      footer={footerContent}
+      isOpen={loginModal.isOpen}
       onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
-      body={bodyContent}
-      footer={footerContent}
     />
   );
 };
