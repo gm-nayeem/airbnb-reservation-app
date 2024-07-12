@@ -15,50 +15,61 @@ export default async function getListings(
     params: IListingsParams
 ) {
     try {
+        const {
+            userId,
+            roomCount,
+            guestCount,
+            bathroomCount,
+            locationValue,
+            startDate,
+            endDate,
+            category,
+        } = params;
+
         let query: any = {};
 
-        if (params?.userId) {
-            query.userId = params?.userId;
+        if (userId) {
+            query.userId = userId;
         }
 
-        if (params?.category) {
-            query.category = params?.category;
+        if (category) {
+            query.category = category;
         }
 
-        if (params?.roomCount) {
+        if (roomCount) {
             query.roomCount = {
-                gte: +params?.roomCount
+                gte: +roomCount
             }
         }
 
-        if (params?.guestCount) {
+        if (guestCount) {
             query.guestCount = {
-                gte: +params?.guestCount
+                gte: +guestCount
             }
         }
 
-        if (params?.bathroomCount) {
+        if (bathroomCount) {
             query.bathroomCount = {
-                gte: +params?.bathroomCount
+                gte: +bathroomCount
             }
         }
 
-        if (params?.locationValue) {
-            query.locationValue = params?.locationValue;
+        if (locationValue) {
+            query.locationValue = locationValue;
         }
 
-        if (params?.startDate && params?.endDate) {
+        if (startDate && endDate) {
             query.NOT = {
                 reservations: {
                     some: {
                         OR: [
                             {
-                                endDate: { gte: params?.startDate },
-                                startDate: { lte: params?.startDate }
+                                endDate: { gte: startDate },
+                                startDate: { lte: startDate }
                             },
                             {
-                                startDate: { lte: params?.endDate },
-                                endDate: { gte: params?.endDate }
+                                startDate: { lte: endDate },
+                                endDate: { gte: endDate }
                             }
                         ]
                     }

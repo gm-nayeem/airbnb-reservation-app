@@ -10,18 +10,20 @@ export default async function getReservations(
     params: IParams
 ) {
     try {
+        const { listingId, userId, authorId } = params;
+
         const query: any = {};
 
-        if (params?.listingId) {
-            query.listingId = params?.listingId;
+        if (listingId) {
+            query.listingId = listingId;
         };
 
-        if (params?.userId) {
-            query.userId = params?.userId;
+        if (userId) {
+            query.userId = userId;
         }
 
-        if (params?.authorId) {
-            query.listing = { userId: params?.authorId };
+        if (authorId) {
+            query.listing = { userId: authorId };
         }
 
         const reservations = await db.reservation.findMany({
