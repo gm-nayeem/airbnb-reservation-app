@@ -38,8 +38,8 @@ const RentModal = () => {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
       category: "",
@@ -54,10 +54,10 @@ const RentModal = () => {
     },
   });
 
-  const location = watch("location");
   const category = watch("category");
-  const guestCount = watch("guestCount");
+  const location = watch("location");
   const roomCount = watch("roomCount");
+  const guestCount = watch("guestCount");
   const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
 
@@ -270,13 +270,13 @@ const RentModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={rentModal.isOpen}
-      title="Airbnb your home!"
-      actionLabel={actionLabel}
-      onSubmit={handleSubmit(onSubmit)}
-      secondaryActionLabel={secondaryActionLabel}
-      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       onClose={rentModal.onClose}
+      title="Airbnb your home!"
       body={bodyContent}
+      actionLabel={actionLabel}
+      secondaryActionLabel={secondaryActionLabel}
+      onSubmit={handleSubmit(onSubmit)}
+      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
     />
   );
 };
